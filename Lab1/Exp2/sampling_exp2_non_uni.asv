@@ -1,0 +1,90 @@
+clear;
+close all;
+
+% load the data from given .mat file
+load('signal_lab1.mat');
+
+L = length(signal1);    % length of original signal
+
+Nq = 100;       % Nyquist rate 100 Hz = 
+
+% 3 sampling rates
+sampleRate_a = Nq/2;
+sampleRate_b = Nq;
+sampleRate_c = 4*Nq;
+
+% uniformly sampled signals
+sample_a = signal1(1 : abs(L/sampleRate_a) : L);     % L/sampleRate_a = delta_t, the time step in sampling
+
+sample_b = signal1(1 : abs(L/sampleRate_b) : L);
+
+sample_c = signal1(1 : abs(L/sampleRate_c) : L);
+
+
+% plotting the sampled signals on original signal
+% smaple 
+figure
+plot(signal1)
+hold on
+plot( (1 : abs(L/sampleRate_a) : L), sample_a, '+')
+title('Sampling Signal1 at sampling rate = Nyquist rate/2')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal1')
+
+figure
+plot(signal1)
+hold on
+plot( (1 : abs(L/sampleRate_b) : L), sample_b, '+')
+title('Sampling Signal1 at sampling rate = Nyquist rate')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal1')
+
+figure
+plot(signal1)
+hold on
+plot( (1 : abs(L/sampleRate_c) : L), sample_c, '+')
+title('Sampling Signal1 at sampling rate = 4*Nyquist rate')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal1')
+
+
+
+
+%%%%%%%%%%%%%% Part 3 Interpolating to get original signal %%%%%%%%%%%%%%%%
+
+% time intervals for each case
+time_a = (1 : abs(L/sampleRate_a) : L);
+time_b = (1 : abs(L/sampleRate_b) : L);
+time_c = (1 : abs(L/sampleRate_c) : L);
+
+% perform linear interpolation over sampled data in each case
+regen_a = interp1(time_a, sample_a, 1:L);
+regen_b = interp1(time_b, sample_b, 1:L);
+regen_c = interp1(time_c, sample_c, 1:L);
+
+% plot the interpolated signals
+figure
+plot(signal1)
+hold on
+plot(regen_a)
+title('Reconstructed Signal1 at sampling rate = Nyquist rate/2')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal1')
+
+figure
+plot(signal1)
+hold on
+plot(regen_b)
+title('Reconstructed Signal1 at sampling rate = Nyquist rate')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal1')
+
+figure
+plot(signal1)
+hold on
+plot(regen_c)
+title('Reconstructed Signal1 at sampling rate = 4*Nyquist rate')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal1')
+
+

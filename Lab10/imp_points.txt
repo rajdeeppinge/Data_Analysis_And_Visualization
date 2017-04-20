@@ -1,0 +1,63 @@
+D 3 vidoes a factor?
+
+is video itself a factor? i think no
+
+Xijk - each observer (from 26)
+
+//////////////
+
+TA advice- video may affect results. So do 2-way anova sep for a given video seqeuence.
+
+         - another way, do pair wise 2-way anova pariwise between the 3 factors???? (dunno)
+		 
+D what is the procedure of 2-way? How to accept reject?
+
+////////////////////////////
+
+MATLAB anova2 proc- 
+
+replication - observas for a pair of factors.
+
+
+//// anova running is done
+
+To do- 1. do exploratory analysis [use diagrams sugg by Sir]and check for the samples given what kind of effect do the factors have? 
+FOR THE SAMPLE are they
+significant[can you observe a difference]. 
+2.If yes then the question would be are they statistically significant. 
+
+
+///////// exploratory analysis
+
+one thing to do will be to sum over a factor, this asumes that factor will not have any effect. STRONG ASSUMPTION
+Hence sir says that group by group compara is better than the former. 
+
+e.g sumover indica that capsule is not significant but group wise it indicates that there may be an effect.
+from juice G to D in cap C it is inc but for V it is dec and hence the summing does not show much difference. Not 
+very proper.
+
+For the case of juice means, for C large difference, but for V not much differece. This suggests interaction between
+juice and capsule.
+
+///////////
+
+Get such values and the diagram.
+
+check capsule efect disregarding diff in juice: implies take average across the diges juives[same as avg of avg of for juices]
+
+/////////
+
+first get summed up averages. 
+
+then get group averages. [ 3 x 8 = 24 groups]. then think of interac diagrams.
+
+////////////
+
+the 24 MOS are the 2 factor group means.
+
+added MOS to vid1_data.
+
+observations- for a bit rate, not much variation across upscalers, not much effect of upscalers. 
+			  diff between X_b_str [averaging across upscalers.]
+	
+// group average table contains all the 24 group averages.

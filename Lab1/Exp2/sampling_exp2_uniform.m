@@ -1,0 +1,100 @@
+clear;
+close all;
+
+% load the data from given .mat file
+load('signal_lab1.mat');
+
+L = length(signal2);    % length of original signal
+
+Nq = 100;       % Nyquist rate 100 Hz = 2 * max(8, 15, 50)
+
+% 2 sampling rates
+sampleRate_a = Nq/2;    % max(f1,f2,f3) = Nyquist rate/2
+sampleRate_b = Nq;
+
+% uniformly sampled signals
+sample_a = signal2(1 : abs(L/sampleRate_a) : L);     % L/sampleRate_a = delta_t, the time step in sampling
+
+sample_b = signal2(1 : abs(L/sampleRate_b) : L);
+
+
+% plotting the sampled signals on original signal
+% smaple 
+figure
+plot(signal2)
+hold on
+plot( (1 : abs(L/sampleRate_a) : L), sample_a, 'r+')
+title('Sampling Signal2 at sampling rate = Nyquist rate/2')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal2')
+
+figure
+plot(signal2)
+hold on
+plot( (1 : abs(L/sampleRate_b) : L), sample_b, 'r+')
+title('Sampling Signal2 at sampling rate = Nyquist rate')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal2')
+
+
+
+
+%%%%%%%%%%%%%% Part 3 Interpolating to get original signal %%%%%%%%%%%%%%%%
+
+% time intervals for each case
+time_a = (1 : abs(L/sampleRate_a) : L);
+time_b = (1 : abs(L/sampleRate_b) : L);
+
+% perform linear interpolation over sampled data in each case
+regen_a = interp1(time_a, sample_a, 1:L);
+regen_b = interp1(time_b, sample_b, 1:L);
+
+% plot the interpolated signals
+figure
+plot(signal2)
+hold on
+plot(regen_a, 'r')
+title('Reconstructed Signal2 at sampling rate = Nyquist rate/2')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal2')
+
+figure
+plot(signal2)
+hold on
+plot(regen_b, 'r')
+title('Reconstructed Signal2 at sampling rate = Nyquist rate')
+xlabel('Time (ms)')
+ylabel('Amplitude of signal2')
+
+
+
+
+%%%%%%%%%%%%% computing reconstruction error %%%%%%%%%%%%%%
+
+% Here we are taking the error to be the mean squared error MSE
+
+totalError_a = 0;
+totalError_b = 0;
+
+% calculating the number of elements of array which have been interpolated
+% successfully and over which the error can be found out
+elem_a = 0;
+elem_b = 0;
+
+for i = 1:L 
+    if ~isnan(regen_a(i))   % check if the interpolation has happened
+        totalError_a = totalError_a + (signal2(i) - regen_a(i)) * (signal2(i) - regen_a(i));
+        elem_a = elem_a + 1;
+    end
+end
+ 
+MSE_a = totalError_a / elem_a;
+
+for i = 1:L
+    if ~isnan(regen_b(i))
+        totalError_b = totalError_b + (signal2(i) - regen_b(i)) * (signal2(i) - regen_b(i));
+        elem_b = elem_b + 1;
+    end
+end 
+
+MSE_b = totalError_b / elem_b;
